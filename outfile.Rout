@@ -50,5 +50,5 @@ Type 'q()' to quit R.
 > save(test, file = "test.rda")
 > 
 > proc.time()
-    user   system  elapsed 
-7485.245   59.686 7544.512 
+   user  system elapsed 
+951.835  21.946 974.891 
