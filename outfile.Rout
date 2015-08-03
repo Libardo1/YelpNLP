@@ -35,22 +35,18 @@ Type 'q()' to quit R.
 +               ncol = 10, byrow = TRUE)
 > temp = temp[temp[,10] %in% businessID,]
 > train = data.frame(stars = numeric(nrow(temp)), starsF = NA, text = NA)
-> for (i in 1:nrow(temp)) {
-+   train$stars[i] = as.numeric(temp[i,6])
-+   train$text[i] = temp[i,8]
-+ }
+> train$stars = as.numeric(temp[,6])
 > train$starsF = cut(train$stars, seq(.5, 5.5, 1.66), labels = levels)
+> train$text = temp[,8]
 > save(train, file = "train.rda")
 > 
 > # Extract rating and review data from academic dataset
 > temp = matrix(sapply(readLines("test.json"), function(x) unlist(fromJSON(x))),
 +               ncol = 10, byrow = TRUE)
 > test = data.frame(stars = numeric(nrow(temp)), starsF = NA, text = NA)
-> for (i in 1:nrow(temp)) {
-+   test$stars[i] = as.numeric(temp[i,8])
-+   test$text[i] = temp[i,7]
-+ }
+> test$stars = as.numeric(temp[,8])
 > test$starsF = cut(test$stars, seq(.5, 5.5, 1.66), labels = levels)
+> test$text = temp[,7]
 > save(test, file = "test.rda")
 > 
 > proc.time()
