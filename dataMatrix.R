@@ -7,7 +7,7 @@ count = function(x) {
 }
 
 exist = function(x) {
-  grepl(x, trainLower)
+  as.factor(grepl(x, trainLower))
 }
 
 data = data.frame(rating = train$starsF)
