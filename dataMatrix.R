@@ -1,11 +1,14 @@
 load("train.rda")
 
+# All-lowercase variant of train.rda for ease in matching strings
 trainLower = tolower(train$text)
 
+# Helper function that returns the count of appearances of a string
 count = function(x) {
   sapply(trainLower, function(y) length(gregexpr(x, y)[[1]]))
 }
 
+# Helper function that returns whether or not a string appears
 exist = function(x) {
   as.factor(grepl(x, trainLower))
 }
@@ -53,7 +56,6 @@ data$pleasing = exist(" pleasing")
 data$endless = exist(" endless")
 data$highly = exist(" highly")
 data$convenient = exist(" convenient")
-data$atmosphere = exist(" atmosphere")
 data$packed = exist(" packed")
 data$hungry = exist(" (hungry|starving|famished)")
 data$favorite = count(" favorite")
@@ -111,6 +113,7 @@ data$tip = exist(" tip")
 data$impress = exist(" impress")
 data$fantastic = count("fantastic")
 data$cozy = exist("cozy")
+data$atmosphere = exist(" atmosphere")
 data$beautiful = exist("beautiful")
 data$forever = exist("forever")
 data$tender = exist("tender[^s]")
@@ -145,7 +148,7 @@ data$another_try = exist(" (another|more|second) (try|chance)")
 data$long = exist(" long")
 data$clue = exist(" clue")
 data$nah = exist("nah")
-data$tiny = count(" tiny")
+data$tiny = exist(" tiny")
 data$naive = exist("naive")
 data$slow = count(" slow")
 data$noisy = exist(" noisy")
