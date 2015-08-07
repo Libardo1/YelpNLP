@@ -24,11 +24,5 @@ save(categorical, file = "categorical.rda")
 
 # Drop categorical variables with less than 2 units of predicting power
 lessThan2 = categorical[categorical < 2]
-dataRev = data[,!(names(data) %in% names(lessThan2))]
-
-# numerical variables by helpfulness in predicting rating
-temp = which(sapply(data, is.numeric))
-
-
-# Drop numerical variables with
-#dataFin = 
+dataFin = data[,!(names(data) %in% names(lessThan2))]
+save(dataFin, file = "dataFin.rda")
