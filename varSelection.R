@@ -26,5 +26,9 @@ save(categorical, file = "categorical.rda")
 lessThan2 = categorical[categorical < 2]
 dataRev = data[,!(names(data) %in% names(lessThan2))]
 
+# numerical variables by helpfulness in predicting rating
+temp = which(sapply(data, is.numeric))
+
+
 # Drop numerical variables with
 #dataFin = 
