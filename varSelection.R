@@ -20,8 +20,11 @@ for (i in 1:length(temp)) {
 }
 names(categorical) = names(data)[temp]
 categorical = sort(categorical, decreasing = TRUE)
+save(categorical, file = "categorical.rda")
 
 # Drop categorical variables with less than 2 units of predicting power
-###data[,!(names(data) %in% names(categorical))]
+lessThan2 = categorical[categorical < 2]
+dataRev = data[,!(names(data) %in% names(lessThan2))]
 
-#
+# Drop numerical variables with
+#dataFin = 
