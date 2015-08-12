@@ -72,7 +72,7 @@ data$text = gsub("8\x8cF", "", data$text)
 data$text = gsub("4n|G", "", data$text)
 data$text = gsub("\005\x92\177\xdc\002", "", data$text)
 
-# Remove most reviews in French, German, Italian, Spanish
+# Remove most reviews in French, German, Italian, Norweigian, Spanish
 temp = c(" [Jj]e ", " [Nn][[:alpha:]]+ [[:alpha:]]* pas ", " [Cc]est ", " [Ii]l[s]? ", " [Ee]lle[s] ", " [Nn]ous ", " qui ", " [Ii]ch ", " [Dd]as ", " [Ii]st ", " nicht ", " und ", " [Ee]in ", " [Dd]er? ", " [Ss]ie ", "\xdf", " y ", " por ", " [Qq]ue ", " muy ", " [Ee]lla ", " bien[ .!]", " dans ", " l[eo]s? ", " esta? ", " ser ", " buena? ", " [Uu]n[aoe]? ", " [Ii]kke ", " og ", "\xd8", "\xe4", "\xee")
 for (i in 1:length(temp)) {
   data = data[-grep(temp[i], data$text),]
