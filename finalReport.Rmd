@@ -2,7 +2,7 @@
 title: "Natural Language Processing in Yelp Reviews"
 author: "Zheng Chang and Victor Kong"
 output: pdf_document
-linespacing: 1.25
+linestretch: 1.1
 ---
 
 \[
@@ -18,18 +18,17 @@ Natural language processing is the study of human language, its interpretation, 
 
 # Methodology
 
-***Describe where your data set comes from and what variables make it up.***
 The raw data set was packaged within the Challenge Dataset distributed throughout the fifth round of the Yelp Dataset Challenge. Specifically, this data set included approximately 1.6 million reviews for 61 thousand businesses in ten cities across Europe and North America. In a preliminary cleaning, a longitude constraint was imposed upon businesses to eliminate all reviews made in French-speaking Montreal and other territories further east, as well as all reviews made for businesses that did not fall under the category of "Restaurants." At this stage, unsupported characters as well as most reviews written languages other than English were also removed.  
 &nbsp;&nbsp;&nbsp;&nbsp;A total of 206 variables were created from English language cues hand-selected from a randomly-generated subset of the reviews. Of these, 203 are binary-categorical, each observation being assigned `TRUE` or `FALSE` according to whether the corresponding review contained the cue. One variable was generated from cues representing contrast (i.e., but, however, though), and observations were assigned values simply by the number of times the cue was detected. The last two variables quantify respectively the use of uppercase letters and the use of exclamation points. Specifically, the former contains ratios of the number of uppercase letters used over the total number of letters used, and the latter contains ratios of the number of exclamation points used over the combined number of exclamation points and periods used.  
-&nbsp;&nbsp;&nbsp;&nbsp;In a secondary cleaning, the 203 categorical variables were evaluated for how much preference each had for one side of the response. This was quantified using the formula
+&nbsp;&nbsp;&nbsp;&nbsp;In a secondary cleaning, the 203 categorical variables were evaluated for how much preference each had for one level of the response. This was quantified using the formula
 \[
-\frac{\max{\left( p_{high} , p_{low} \right)}}{\min{\left( p_{high} , p_{low} \right)}},
+\theta_{cue} = \frac{\max{\left( p_{high,cue} , p_{low,cue} \right)}}{\min{\left( p_{high,cue} , p_{low,cue} \right)}},
 \]
 where
 \[
-p_{high} = \mathrm{\frac{number \thinspace of \thinspace ``high" \thinspace reviews \thinspace with \thinspace cue}{total \thinspace numbers \thinspace of \thinspace ``high" \thinspace reviews}} \enskip \mathrm{and} \enskip p_{low} = \mathrm{\frac{number \thinspace of \thinspace ``low" \thinspace reviews \thinspace with \thinspace cue}{total \thinspace number \thinspace of \thinspace ``low" \thinspace reviews}}.
+p_{high,cue} = \mathrm{\frac{number \thinspace of \thinspace ``high" \thinspace reviews \thinspace with \thinspace cue}{total \thinspace numbers \thinspace of \thinspace ``high" \thinspace reviews}} \enskip \mathrm{and} \enskip p_{low,cue} = \mathrm{\frac{number \thinspace of \thinspace ``low" \thinspace reviews \thinspace with \thinspace cue}{total \thinspace number \thinspace of \thinspace ``low" \thinspace reviews}}.
 \]
-After dropping all categorical variables with less than two units of sorting power as defined above, the final data set included a sample of 93423 reviews and 102 predictor variables. 
+In words, $\theta_{cue}$ is the number of times more likely it is to encounter a cue when given one level than when given the other, so a variable that sorts well would theoretically have $\theta_{cue}$ far greater than 1. After elimination of all categorical variables with $\theta_{cue} < 2$, the final data set includes a sample of 930423 reviews and 102 predictor variables. 
 
 # Results
 
