@@ -25,4 +25,6 @@ save(categorical, file = "categorical.rda")
 # Drop categorical variables with less than 2 units of predicting power
 lessThan2 = categorical[categorical < 2]
 dataFin = dataRev[,!(names(dataRev) %in% names(lessThan2))]
+
+dataFin = na.omit(dataFin)
 save(dataFin, file = "dataFin.rda")

@@ -28,7 +28,7 @@ where
 \[
 p_{high,cue} = \mathrm{\frac{number \thinspace of \thinspace ``high" \thinspace reviews \thinspace with \thinspace cue}{total \thinspace numbers \thinspace of \thinspace ``high" \thinspace reviews}} \enskip \mathrm{and} \enskip p_{low,cue} = \mathrm{\frac{number \thinspace of \thinspace ``low" \thinspace reviews \thinspace with \thinspace cue}{total \thinspace number \thinspace of \thinspace ``low" \thinspace reviews}}.
 \]
-In words, $\theta_{cue}$ is the number of times more likely it is to encounter a cue when given one level than when given the other, so a variable that sorts well would theoretically have $\theta_{cue}$ far greater than 1. After elimination of all categorical variables with $\theta_{cue} < 2$, the final data set includes a sample of 930423 reviews and 102 predictor variables. 
+In words, $\theta_{cue}$ is the number of times more likely it is to encounter a cue when given one level than when given the other, so a variable that sorts well would theoretically have $\theta_{cue}$ far greater than 1. After elimination of all categorical variables with $\theta_{cue} < 2$, the final data set includes a sample of 921615 reviews and 102 predictor variables. 
 
 # Results
 
