@@ -1,88 +1,3 @@
-#LR(training)
-
-dataFin =na.omit(dataFin)
-st.seed(1)
-train =  sample(1:nrow(dataFin),nrow(dataFin)/2-1)
-glm.fit = glm(rating ~., data = dataFin[train,], family = binomial)
-summary(glm.fit) # It seems all varibles works for this model.
-glm.prob = predict(glm.fit, dataFin[train,], type= 'response')
-glm.pred = rep("low",length(glm.prob))
-glm.pred[glm.prob>0.5] = 'high'
-table(glm.pred, dataFin$rating[train])
-mean(glm.pred==dataFin$rating[train])
-trainingError = 1 - mean(glm.pred==dataFin$rating[train])
-trainingError
-
-summary(glm.fit)$coef[,4]
-#LR(Test Error rate)
-
-glm.prob2 = predict(glm.fit, dataFin[-train,], type = 'response')
-glm.pred2 = rep('low', length(glm.prob2))
-glm.pred2[glm.prob2>0.5]='high'
-table(glm.pred2,dataFin[-train,'rating'])
-mean(glm.pred2==dataFin[-train,'rating'])
-testError = 1 - mean(glm.pred2==dataFin[-train,'rating'])
-testError
-
-summary(glm.fit2)$coef[,4]
-
-#LDA(test error)
-library(MASS)
-set.seed(1)
-
-lda.fit = lda(rating ~ ., data = dataFin, subset = train)
-lda.fit
-lda.pred = predict(lda.fit, dataFin[-train,])
-lda.class = lda.pred$class
-table(lda.class, dataFin[-train,'rating'])
-mean(lda.class==dataFin[-train,'rating'])
-testError2 = 1 - mean(lda.class==dataFin[-train,'rating'])
-testError2
-
-#Applying a 50 % threshold to the posterior probabilities
-#sum(lda.pred$posterior[,1]>=.5)
-#sum(lda.pred$posterior[,1]<.5)
-
-
-#QDA(test error)
-set.seed(1)
-qda.fit = qda(rating~., data = dataFin, subset = train)
-qda.fit
-qda.class = predict(qda.fit, dataFin[-train,])$class
-table(qda.class, dataFin[-train,'rating'])
-mean(qda.class==dataFin[-train,'rating'])
-testError3 = 1 - mean(qda.class==dataFin[-train,'rating'])
-testError3
-"
-#knn
-set.seed(1)
-library(class)
-train.X = dataFin[train,-1]
-test.X = dataFin[-train,-1]
-train.rating = dataFin$rating[train]
-test.rating = dataFin$rating[-train]
-
-#k=1
-
-knn.pred = knn(train.X,test.X,train.rating,k=1)
-table(knn.pred, test.rating)
-mean(knn.pred == test.rating)
-testError = 1 - mean(knn.pred == test.rating) 
-
-#k=5
-knn.pred2 = knn(train.X,test.X,train.rating,k=10)
-table(knn.pred2, test.rating)
-mean(knn.pred2==test.rating)
-testError = 1 - mean(knn.pred2 == test.rating) 
-
-#k=10
-knn.pred3 = knn(train.X,test.X,train.rating,k=100)
-table(knn.pred3, test.rating)
-mean(knn.pred3==test.rating)
-testError = 1 - mean(knn.pred3 == test.rating) 
-"
-
-
 #Random Forest and baggings
 #Bagging(train = 1:100)
 
@@ -100,7 +15,7 @@ yhat.bag = predict(bag.yelp, newdata = dataFin[-train,])
 
                    
 table(yhat.bag, High.test)
-mean(yhat.bag==High.test)
+mean(yhat.bag == High.test)
 
 
 
