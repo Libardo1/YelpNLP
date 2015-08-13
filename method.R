@@ -1,25 +1,22 @@
 #LR(training)
 
 dataFin =na.omit(dataFin)
-
-
-glm.fit = glm(rating ~., data = dataFin, family = binomial)
+st.seed(1)
+train =  sample(1:nrow(dataFin),nrow(dataFin)/2-1)
+glm.fit = glm(rating ~., data = dataFin[train,], family = binomial)
 summary(glm.fit) # It seems all varibles works for this model.
-glm.prob = predict(glm.fit,type= 'response')
+glm.prob = predict(glm.fit, dataFin[train,], type= 'response')
 glm.pred = rep("low",length(glm.prob))
 glm.pred[glm.prob>0.5] = 'high'
-table(glm.pred, dataFin$rating)
-mean(glm.pred==dataFin$rating)
-trainingError = 1 - mean(glm.pred==dataFin$rating)
+table(glm.pred, dataFin$rating[train])
+mean(glm.pred==dataFin$rating[train])
+trainingError = 1 - mean(glm.pred==dataFin$rating[train])
 trainingError
 
 summary(glm.fit)$coef[,4]
 #LR(Test Error rate)
 
-set.seed(1)
-train =  sample(1:nrow(dataFin),nrow(dataFin)/2-1)
-glm.fit2 = glm(rating~.,data = dataFin, family = binomial, subset = train)
-glm.prob2 = predict(glm.fit2, dataFin[-train,], type = 'response')
+glm.prob2 = predict(glm.fit, dataFin[-train,], type = 'response')
 glm.pred2 = rep('low', length(glm.prob2))
 glm.pred2[glm.prob2>0.5]='high'
 table(glm.pred2,dataFin[-train,'rating'])
