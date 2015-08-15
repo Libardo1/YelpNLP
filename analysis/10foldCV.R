@@ -25,7 +25,7 @@ for (i in 1:10) {
 colnames(logErr) = threshold
 logVars = matrix(0, nrow = 103, ncol = 10)
 logVars = sapply(logSum, function(x) names(sort(x[,4])))
-save(logErr, logSum, logVars, file = "data/logistic.rda")
+save(logErr, logSum, logVars, file = "../data/logistic.rda")
 
 # Linear discriminant analysis
 ldaErr = matrix(0, ncol = 19, nrow = 10)
@@ -40,7 +40,7 @@ for (i in 1:10) {
   }
   ldaSum[[i]] = ldaFit
 }
-save(ldaErr, ldaSum, file = "data/LDA.rda")
+save(ldaErr, ldaSum, file = "../data/LDA.rda")
 
 # Quadratic discriminant analysis
 qdaErr = matrix(0, ncol = 19, nrow = 10)
@@ -55,4 +55,4 @@ for (i in 1:10) {
   }
   qdaSum[[i]] = qdaFit
 }
-save(qdaErr, qdaSum, file = "data/QDA.rda")
+save(qdaErr, qdaSum, file = "../data/QDA.rda")

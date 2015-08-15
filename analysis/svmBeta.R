@@ -36,4 +36,4 @@ for (i in 1:length(nObs)) {
 }
 
 save(svmErrLinear, svmTimeLinear, svmErrRadial, svmErrRadial,
-     file = "data/SVM.rda")
+     file = "../data/SVM.rda")
