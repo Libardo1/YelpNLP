@@ -4,7 +4,7 @@ load("data/dataFin.rda")
 library(e1071)
 
 # Create vector of numbers of observations to use
-nObs = c(100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000)
+nObs = c(100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000)
 set.seed(1)
 
 # Linear kernel

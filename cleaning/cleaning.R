@@ -81,4 +81,4 @@ for (i in 1:length(temp)) {
 # Remove an individual unhelpful observation
 data = data[-780072,]
 
-save(data, file = "../data/data.rda")
+save(data, file = "../data/review.rda")
