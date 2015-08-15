@@ -17,13 +17,13 @@ bwdSelect = regsubsets(rating ~ ., dataRev, really.big = TRUE, nvmax = 102,
                           method = "backward")
 
 # Subset selection by validation set approach
-fwdErr = numeric(nrow(dataRev))
+fwdErr = numeric(ncol(dataRev))
 for (i in 1:(ncol(dataRev) - 1)) {
   coefi = coef(fwdSelect, i)
   pred = x[test, names(coefi)] %*% coefi
   fwdErr[i] = mean((y[test] - pred)^2)
 }
-bwdErr = numeric(nrow(dataRev))
+bwdErr = numeric(ncol(dataRev))
 for (i in 1:(ncol(dataRev) - 1)) {
   coefi = coef(fwdSelect, i)
   pred = x[test, names(coefi)] %*% coefi
