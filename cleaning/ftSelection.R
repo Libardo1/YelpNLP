@@ -10,12 +10,26 @@ test = sample(1:nrow(dataRev), floor(nrow(dataRev) / 10))
 x = model.matrix(rating ~ ., dataRev)
 y = as.numeric(dataRev$rating) - 1
 
-# Best subset, forward stepwise, and backward stepwise Select
+# Forward and backward stepwise selection
 fwdSelect = regsubsets(rating ~ ., dataRev, really.big = TRUE, nvmax = 102,
                           method = "forward")
 bwdSelect = regsubsets(rating ~ ., dataRev, really.big = TRUE, nvmax = 102,
                           method = "backward")
-save(fwdSelect, bwdSelect, file = "subSelect.rda")
+
+# Subset selection by validation set approach
+fwdErr = numeric(nrow(dataRev))
+for (i in 1:(ncol(dataRev) - 1)) {
+  coefi = coef(fwdSelect, i)
+  pred = x[test, names(coefi)] %*% coefi
+  fwdErr[i] = mean((y[test] - pred)^2)
+}
+bwdErr = numeric(nrow(dataRev))
+for (i in 1:(ncol(dataRev) - 1)) {
+  coefi = coef(fwdSelect, i)
+  pred = x[test, names(coefi)] %*% coefi
+  bwdErr[i] = mean((y[test] - pred)^2)
+}
+save(fwdSelect, bwdSelect, fwdErr, bwdErr, file = "subSelect.rda")
 
 # # Ridge regression
 # grid = 10^seq(10, -2, length = 100)
