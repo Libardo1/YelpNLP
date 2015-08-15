@@ -1,4 +1,4 @@
-load("dataRev.rda")
+load("../data/dataRev.rda")
 
 # Disable scientific notation
 options(scipen = 999)
@@ -20,11 +20,11 @@ for (i in 1:length(temp)) {
 }
 names(categorical) = names(dataRev)[temp]
 categorical = sort(categorical, decreasing = TRUE)
-save(categorical, file = "categorical.rda")
+save(categorical, file = "../data/categorical.rda")
 
 # Drop categorical variables with less than 2 units of predicting power
 lessThan2 = categorical[categorical < 2]
 dataFin = dataRev[,!(names(dataRev) %in% names(lessThan2))]
 
 dataFin = na.omit(dataFin)
-save(dataFin, file = "dataFin.rda")
+save(dataFin, file = "../data/dataFin.rda")

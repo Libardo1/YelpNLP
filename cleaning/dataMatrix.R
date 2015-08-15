@@ -1,4 +1,4 @@
-load("data.rda")
+load("../data/data.rda")
 
 # All-lowercase variant of data.rda for ease in matching strings
 dataLower = tolower(data$text)
@@ -224,4 +224,4 @@ dataRev$not_even = exist("(cant|not|wouldnt|wont|dont|shouldnt|shant) even")
 dataRev$smiley = exist("(\\(:|:\\)|:D)")
 dataRev$not_fail = exist(" (not|without|never|ever) fail")
 
-save(dataRev, file = "dataRev.rda")
+save(dataRev, file = "../data/dataRev.rda")
