@@ -3,37 +3,28 @@ load("../data/dataFin.rda")
 # Load relevant packages
 library(e1071)
 
-# Create vector of numbers of observations to use
-nObs = c(100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000)
+# Create suitable subset for 10-fold cross-validation
 set.seed(1)
+data = dataFin[sample(1:nrow(dataFin), 10 * floor(nrow(dataFin) / 10)),]
 
 # Linear kernel
-svmErrLinear = numeric(length(nObs))
-svmTimeLinear = numeric(length(nObs))
-for (i in 1:length(nObs)) {
-  startTime = proc.time()[3]
-  train = sample(1:nrow(dataFin), nObs[i])
-  tuneOut = tune(svm, rating ~ ., data = dataFin[train,], kernel = "linear", 
+svmErrLinear = numeric(10)
+for (i in 1:10) {
+  test = 1:(nrow(data) / 10) + nrow(data) * (i - 1) / 10
+  tuneOut = tune(svm, rating ~ ., data = data[-test,], kernel = "linear", 
                  range = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
-  svmPred = predict(tuneOut$best.model, dataFin[-train,])
-  table(svmPred, dataFin[-train, "rating"])
-  svmErrLinear[i] = 1 - mean(svmPred == dataFin[-train, "rating"])
-  svmTimeLinear[i] = proc.time()[3] - startTime
+  svmPred = predict(tuneOut$best.model, dataFin[test,])
+  svmErrLinear[i] = 1 - mean(svmPred == dataFin[test, "rating"])
 }
 
 # Radial kernel
-svmErrRadial = numeric(length(nObs))
-svmTimeRadial = numeric(length(nObs))
-for (i in 1:length(nObs)) {
-  startTime = proc.time()[3]
-  train = sample(1:nrow(dataFin), nObs[i])
-  tuneOut = tune(svm, rating ~ ., data = dataFin[train,], kernel = "radial", 
+svmErrRadial = numeric(10)
+for (i in 1:10) {
+  test = 1:(nrow(data) / 10) + nrow(data) * (i - 1) / 10
+  tuneOut = tune(svm, rating ~ ., data = data[-test,], kernel = "radial", 
                  range = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
-  svmPred = predict(tuneOut$best.model, dataFin[-train,])
-  table(svmPred, dataFin[-train, "rating"])
-  svmErrRadial[i] = 1 - mean(svmPred == dataFin[-train, "rating"])
-  svmTimeRadial[i] = proc.time()[3] - startTime
+  svmPred = predict(tuneOut$best.model, dataFin[test,])
+  svmErrRadial[i] = 1 - mean(svmPred == dataFin[test, "rating"])
 }
 
-save(svmErrLinear, svmTimeLinear, svmErrRadial, svmErrRadial,
-     file = "../data/SVM.rda")
+save(svmErrLinear, svmErrRadial, file = "../data/SVM.rda")
