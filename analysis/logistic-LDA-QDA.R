@@ -25,7 +25,7 @@ for (i in 1:10) {
 colnames(logErr) = threshold
 logErr = apply(logErr, 2, mean)
 logVars = matrix(0, nrow = 103, ncol = 10)
-logVars = sapply(logSum, function(x) names(sort(x[,4])))
+logVars = apply(sapply(logSum, function(x) x[,1]), 1, mean)
 save(logErr, logSum, logVars, file = "../data/logistic.rda")
 
 # Linear discriminant analysis
