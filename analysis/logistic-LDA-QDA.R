@@ -44,7 +44,10 @@ for (i in 1:10) {
 }
 colnames(ldaErr) = threshold
 ldaErr = apply(ldaErr, 2, mean)
-save(ldaErr, ldaSum, file = "../data/LDA.rda")
+ldaVars = apply(sapply(ldaSum, function(x) x$scaling), 1, mean)
+names(ldaVars) = colnames(dataFin)[-1]
+ldaVars = sort(ldaVars)
+save(ldaErr, ldaSum, ldaVars, file = "../data/LDA.rda")
 
 # Quadratic discriminant analysis
 qdaErr = matrix(0, ncol = 50, nrow = 10)

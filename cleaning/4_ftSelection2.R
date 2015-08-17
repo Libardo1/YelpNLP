@@ -7,7 +7,7 @@ library(leaps)
 x = model.matrix(rating ~ ., dataRev)
 y = as.numeric(dataRev$rating) - 1
 
-# Forward and backward stepwise selection
+# Forward stepwise, backward stepwise, and hybrid selection
 fwdSelect = regsubsets(rating ~ ., dataRev, really.big = TRUE, nvmax = 102,
                        method = "forward")
 bwdSelect = regsubsets(rating ~ ., dataRev, really.big = TRUE, nvmax = 102,
